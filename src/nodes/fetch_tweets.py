@@ -96,8 +96,8 @@ def fetch_tweets_node(state: AgentState) -> dict:
         client = _build_client()
         queries = build_search_queries()
 
-        # Post-game window: last 12 hours
-        end_time = datetime.now(timezone.utc)
+        # Post-game window: last 12 hours (end_time must be ≥30s in the past for X API)
+        end_time = datetime.now(timezone.utc) - timedelta(seconds=30)
         start_time = end_time - timedelta(hours=12)
 
         all_tweets: list[Tweet] = []
